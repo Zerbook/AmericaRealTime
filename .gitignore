@@ -1,0 +1,8 @@
+tetst.py
+share/
+pyvenv.cfg
+.idea/
+Lib/
+Scripts/
+__pycache__/
+etc/
