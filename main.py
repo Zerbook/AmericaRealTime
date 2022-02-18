@@ -20,9 +20,10 @@ class downloader(QtCore.QThread):
         self.indexes = None
         self.keyStop = True
     def run(self):
+        # привет мир
         #self.mysignal.emit('Процесс скачивания запущен!')
         #with youtube_dl.YoutubeDL({}) as ydl:
-        #    ydl.download([self.url])
+        # ydl.download([self.url])
         #self.mysignal.emit('Процесс скачивания завкршен!')
         row = 0
 
