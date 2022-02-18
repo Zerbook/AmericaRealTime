@@ -26,7 +26,6 @@ class downloader(QtCore.QThread):
         # ydl.download([self.url])
         #self.mysignal.emit('Процесс скачивания завкршен!')
         row = 0
-
         for item in self.indexes:
             if self.getKeyStop():
                 break
@@ -45,7 +44,7 @@ class downloader(QtCore.QThread):
     def setKeyStop(self, key):
         self.keyStop = key
 
-class gui(QtWidgets.QMainWindow):
+class TerminalWin(QtWidgets.QMainWindow):
     indexes = []
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -97,10 +96,10 @@ class gui(QtWidgets.QMainWindow):
         #self.download_folder = QtWidgets.QFileDialog.getExistingDirectory(self, 'Выбрать папку для сохранения')
         #os.chdir(self.download_folder)
         self.mythread.setKeyStop(True)
-        flags = self.windowFlags() | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint
-        self.setWindowFlags(flags)
-        self.anim = QPropertyAnimation(self, b"geometry")
-        self.anim.setStartValue(QRect(150,30,200,1))
+        #flags = self.windowFlags() | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint
+        #self.setWindowFlags(flags)
+        #self.anim = QPropertyAnimation(self, b"geometry")
+        #self.anim.setStartValue(QRect(150,30,200,1))
 
 
     def handler(self, value):
@@ -114,7 +113,7 @@ class gui(QtWidgets.QMainWindow):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    win = gui()
+    win = TerminalWin()
     win.show()
     sys.exit(app.exec_())
 
