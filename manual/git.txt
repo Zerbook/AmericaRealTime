@@ -1,0 +1,9 @@
+git pull
+
+git status
+
+git add .
+
+git commit -m "18.02.2022 на работе"
+
+git push
