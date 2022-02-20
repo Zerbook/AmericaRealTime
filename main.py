@@ -1,4 +1,4 @@
-import os
+
 import sys
 import youtube_dl
 import time
