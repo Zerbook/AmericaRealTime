@@ -8,41 +8,9 @@ from PyQt5.QtCore import QPropertyAnimation, QRect, Qt
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QTableWidgetItem
 
-from formTerminal import Ui_MainWindow
+from forms.formTerminal import Ui_MainWindow
+from paralProcess import ParalProcess
 
-
-class downloader(QtCore.QThread):
-    mysignal = QtCore.pyqtSignal(str)
-
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.url = None
-        self.indexes = None
-        self.keyStop = True
-    def run(self):
-        #      привет мир
-        #self.mysignal.emit('Процесс скачивания запущен!')
-        #with youtube_dl.YoutubeDL({}) as ydl:
-        # ydl.download([self.url])
-        #self.mysignal.emit('Процесс скачивания завкршен!')
-        row = 0
-        for item in self.indexes:
-            if self.getKeyStop():
-                break
-            time.sleep(1)
-            self.mysignal.emit(str(row))
-            row += 1
-
-        self.mysignal.emit('finish')
-        rrr = 1
-    def init_args(self, url):
-        self.url = url
-    def init_indexes(self, indexes):
-        self.indexes = indexes
-    def getKeyStop(self):
-        return self.keyStop
-    def setKeyStop(self, key):
-        self.keyStop = key
 
 class TerminalWin(QtWidgets.QMainWindow):
     indexes = []
@@ -51,10 +19,9 @@ class TerminalWin(QtWidgets.QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.setWindowTitle('Терминал real time')
-        self.setWindowIcon(QIcon('icon2.ico'))
+        self.setWindowIcon(QIcon('assets/icon2.ico'))
 
-
-        with open("indexes.txt", "r") as file:
+        with open("data/indexes.txt", "r") as file:
             for line in file:
                 self.indexes.append(line.strip())
                 #print(line.strip())
@@ -72,42 +39,22 @@ class TerminalWin(QtWidgets.QMainWindow):
         self.download_folder = None
         self.ui.pushButton.clicked.connect(self.stop)
         self.ui.pushButton_2.clicked.connect(self.start)
-        self.mythread = downloader()
-        self.mythread.mysignal.connect(self.handler)
+        self.paralProcess = ParalProcess()
+        self.paralProcess.mysignal.connect(self.handler)
 
     def start(self):
-        #if len(self.ui.lineEdit.text()) > 5:
-            #if self.download_folder != None:
-                #link = self.ui.lineEdit.text()
-                #self.mythread.init_args(link)
-
-
-                self.mythread.setKeyStop(False)
-                self.mythread.init_indexes(self.indexes)
-
-                self.mythread.start()
-                #self.locker(True)
-           # else:
-           #     QtWidgets.QMessageBox.warning(self, "Ошибка", "Вы не выбрали папку!")
-        #else:
-          #  QtWidgets.QMessageBox.warning(self, "Ошибка", "Ссылка на видео не указана!")
+        self.paralProcess.setKeyStop(False)
+        self.paralProcess.init_indexes(self.indexes)
+        self.paralProcess.start()
 
     def stop(self):
-        #self.download_folder = QtWidgets.QFileDialog.getExistingDirectory(self, 'Выбрать папку для сохранения')
-        #os.chdir(self.download_folder)
-        self.mythread.setKeyStop(True)
-        #flags = self.windowFlags() | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint
-        #self.setWindowFlags(flags)
-        #self.anim = QPropertyAnimation(self, b"geometry")
-        #self.anim.setStartValue(QRect(150,30,200,1))
-
+        self.paralProcess.setKeyStop(True)
 
     def handler(self, value):
-
             self.ui.plainTextEdit.appendPlainText(value)
 
     def locker(self, lock_value):
-        base = [self.ui.pushButton]  #, self.ui.pushButton_2
+        base = [self.ui.pushButton]
         for item in base:
             item.setDisabled(lock_value)
 
