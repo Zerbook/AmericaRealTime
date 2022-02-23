@@ -20,7 +20,7 @@ class Tb(QTableWidget):
     def __init__(self, wg):
         super().__init__(wg)
         self.setGeometry(10, 10, 570, 500)
-        cf = open('таблица.csv',mode="r", encoding="utf-8")
+        cf = open('tabl.csv',mode="r", encoding="utf-8")
         data = cf.read()
         lines = data.split('\n')
         self.setColumnCount(len(lines[0].split(','))) # количество столбцов
