@@ -7,7 +7,7 @@ class GettingDataDay:
     def __init__(self, index, dateNew, period):
         self.stack = index
         self.dateNew = dateNew
-        self.period = '800'
+        self.period = period
         sEndDate = dateNew
 
 
