@@ -2,7 +2,7 @@ from PyQt5 import QtCore
 import time
 
 
-class ParalProcess(QtCore.QThread):
+class paralProcess(QtCore.QThread):
     mysignal = QtCore.pyqtSignal(str)
 
     def __init__(self, parent=None):

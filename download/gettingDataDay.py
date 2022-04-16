@@ -15,12 +15,18 @@ class GettingDataDay:
         dEndDate = datetime.strptime(sEndDate, "%d-%m-%Y")
         dStartDate = dEndDate - timedelta(**timeDeltaKwarg)
 
-        iterYear = dStartDate.year
+        startYear = dStartDate.year
         endYear = dEndDate.year
+        iterYear = startYear
 
         my_list = []
+        listPeriod = []
         my_list.append(iterYear)
         while not iterYear >= endYear:
+            if iterYear == startYear:
+                line = {dStartDate.strftime("%d-%m-%Y"): "31-12-" + str(startYear)}
+                listPeriod.append(line)
+
             iterYear += 1
             my_list.append(iterYear)
 

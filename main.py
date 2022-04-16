@@ -9,7 +9,7 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QTableWidgetItem
 
 from forms.formTerminal import Ui_MainWindow
-from paralProcess import ParalProcess
+from paralProcess import paralProcess
 
 
 class TerminalWin(QtWidgets.QMainWindow):
@@ -39,7 +39,7 @@ class TerminalWin(QtWidgets.QMainWindow):
         self.download_folder = None
         self.ui.pushButton.clicked.connect(self.stop)
         self.ui.pushButton_2.clicked.connect(self.start)
-        self.paralProcess = ParalProcess()
+        self.paralProcess = paralProcess()
         self.paralProcess.mysignal.connect(self.handler)
 
     def start(self):
